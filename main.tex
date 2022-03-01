@@ -1,0 +1,126 @@
+\documentclass[11pt]{article}
+\usepackage{bookmark}
+\usepackage{xhfill}
+\usepackage[margin=1in]{geometry}
+\usepackage[labelfont=bf]{caption}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+%\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum} % lorem ipsum, filler text
+\usepackage{multicol} % f u l l  w i d t h columns
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{amsbsy}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\newcommand{\R}{\mathbb{R}}
+%%%%% font
+%\usepackage{libertinus}
+%\usepackage[adobe-utopia]{mathdesign}
+\usepackage{stix2}%%%% current fav
+%\usepackage{gfsartemisia}
+%\usepackage[bitstream-charter]{mathdesign}
+%\usepackage{newpxtext,eulerpx}
+%%%%%
+\newenvironment{where}{\noindent{}where\begin{itemize}}{\end{itemize}}
+\usepackage{setspace}
+\begin{document}
+\textbf{THIS IS A COPY OF JYOTI'S REPORT! WE WILL BE MAKING CHANGES!}\\\\
+Object detection, classification and distance estimation are important perception
+operations of autonomous vehicles which are conducted using camera, radar and LIDAR
+sensors. Recently, systems have been designed that carry out perception operations by fusing
+camera images with LIDAR point clouds and generate significantly better results compared to
+standalone sensors \cite{1}\cite{2}\cite{3}. However, data produced by LIDAR based perception systems
+under weather conditions like rain, fog, snow, or dust are unreliable because of their reliance on
+near-infrared light \cite{2}. On the other hand, radars are impervious to adverse weather conditions
+because of their reliance on radio waves. This makes radars a good candidate that can provide
+redundancy to LIDAR sensor systems. However, radars are also more noisy, less accurate and
+provide sparse results. This makes object detection and classification using radars extremely
+difficult \cite{2}.\\
+
+One way to overcome this challenge is by creating a perception framework based on
+radar-camera fusion where additional information about shapes and colours of a scene can be
+obtained from camera images. However, in this perception framework, sparse and noisy radar
+point clouds often cause perception operations on smaller objects to become dependent solely
+on image data \cite{4}\cite{5}. To make radars more involved in radar-camera fusion pipelines, a more
+informative and denser representation of radar data like a radar spectrum generated using
+multi-dimensional Fast Fourier Transform (FFT) can be used. FFT can be used to create a
+continuous range-azimuth heat map in which any object in a scene can be given a hot spot on
+its range-azimuth position based on the power strength and doppler signature of radar signals
+reflected from that object. Research has shown that detecting and classifying small objects
+using this range-azimuth radar spectra with the help of convolutional neural networks or just
+simple knowledge based methods works surprisingly well \cite{5}\cite{6}. So, creating a perception
+pipeline that uses radar spectra heat maps and camera images would be very effective.\\
+
+Hence, the primary objective of my thesis is to create a pipeline that uses FFT radar
+spectra and RGB images to detect, classify and find distance to close objects in a scene. To
+create this pipeline, following sub-objectives have to be met:
+\begin{itemize}
+    \item Implement a FFT algorithm and a denoising algorithm that can create range-azimuth spectra from raw radar signals with minimal noise.
+    \item Create separate object detection sub-pipelines for radar and camera.
+    \item Create an image-radar correspondence model to properly map objects in images and radar spectra to each other, and develop an algorithm to select valid radar and camera object detections and merge them.
+    \item Create an object classification model that takes radar spectra and RGB images for every detected object and outputs a class label for those objects.
+\end{itemize}
+To start working on this project, a large dataset of synchronized raw radar signals and
+camera images such as CARRADA can be used \cite{7}. However, this dataset uses a very low
+resolution radar and collects data from sparsely populated scenes \cite{7}. So, if needed, a new
+dataset can be created in more densely populated scenes using a high-resolution radar like TI
+AWR2243. Subsequently, the radar-camera fusion pipeline for this project can be created using
+point cloud based radar-camera fusion pipelines used in \cite{2}\cite{4}, and can later be adapted to work
+with radar spectra using \cite{5}\cite{10}. For sub-objective I, FFT and denoising algorithms can be
+implemented based on \cite{5}\cite{8}\cite{9}. For sub-objective II, the camera sub-pipeline can use an
+Imagenet based encoder similar to \cite{1}\cite{2}, and the radar sub-pipeline can use a simple CNN
+encoder like in \cite{5}. For III, homography and machine learning approaches described in \cite{2} can
+be used for image-radar correspondence. For IV, an encoder and a fully connected neural
+network based on \cite{2}\cite{4}\cite{5} can be used to generate class labels for every object in a scene.
+\begin{thebibliography}{9}
+\bibitem{1}
+X. Dong, B. Zhuang, Y. Mao, and L. Liu, “Radar camera fusion via representation learning
+in autonomous driving,” 2021 IEEE/CVF Conference on Computer Vision and Pattern
+Recognition Workshops (CVPRW), 2021. Available: https://arxiv.org/pdf/2103.07825.pdf
+\bibitem{2}
+R. Nabati en H. Qi, “Radar-Camera Sensor Fusion for Joint Object Detection and Distance
+Estimation in Autonomous Vehicles”, CoRR, vol abs/2009.08428, 2020. Available:
+https://arxiv.org/pdf/2009.08428.pdf
+\bibitem{3}
+J. Ku, M. Mozifian, J. Lee, A. Harakeh, and S. L. Waslander, “Joint 3D proposal generation
+and object detection from view aggregation,” 2018 IEEE/RSJ International Conference on
+Intelligent Robots and Systems (IROS), 2018.
+\bibitem{4}
+ F. Nobis, M. Geisslinger, M. Weber, J. Betz, and M. Lienkamp, “A deep learning-based
+radar and camera sensor fusion architecture for object detection,” 2019 Sensor Data
+Fusion: Trends, Solutions, Applications (SDF), 2019. Available:
+https://arxiv.org/pdf/2005.07431.pdf
+\bibitem{5}
+K. Patel, K. Rambach, T. Visentin, D. Rusev, M. Pfeiffer, and B. Yang, “Deep learning-based
+object classification on Automotive Radar Spectra,” 2019 IEEE Radar Conference
+(RadarConf), 2019.
+\bibitem{6}
+A. Bartsch, F. Fitzek, and R. H. Rasshofer, “Pedestrian recognition using automotive radar
+sensors,” Advances in Radio Science, vol. 10, pp. 45–55, 2012.
+\bibitem{7}
+A. Ouaknine, A. Newson, J. Rebut, F. Tupin, and P. Perez, “CARRAD dataset: Camera and
+automotive radar with range- angle- Doppler annotations,” 2020 25th International
+Conference on Pattern Recognition (ICPR), 2021. Available:
+https://arxiv.org/pdf/2005.01456.pdf
+\bibitem{8}
+Y.-Z. Ma, C. Cui, B.-S. Kim, J.-M. Joo, S. H. Jeon, and S. Nam, “Road Clutter Spectrum of
+BSD FMCW automotive radar,” 2015 European Radar Conference (EuRAD), 2015.
+\bibitem{9}
+B. Jokanovic and M. Amin, “Fall detection using deep learning in range-doppler radars,”
+IEEE Transactions on Aerospace and Electronic Systems, vol. 54, no. 1, pp. 180–189,
+2018.
+\bibitem{10}
+S. Abdulatif, Q. Wei, F. Aziz, B. Kleiner, and U. Schneider, “Micro-doppler based
+human-robot classification using ensemble and Deep Learning Approaches,” 2018 IEEE
+Radar Conference (RadarConf18), 2018.
+\end{thebibliography}
+\end{document}
